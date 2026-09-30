@@ -13,8 +13,8 @@
  *
  * Rendering shells out to the bundled @mermaid-js/mermaid-cli (`mmdc`) with a
  * puppeteer config pointing at an installed Chrome, so no Chromium download is
- * needed. Module-level session state persists across this child process's tool
- * calls and is naturally isolated from any parallel maker (different process).
+ * needed. Factory-local session state and a unique staging group isolate each
+ * maker's tool calls, including parallel makers in the same process.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent"
@@ -45,9 +45,10 @@ const RENDER_TIMEOUT_MS = 120_000
 
 type RenderDetails = { ok: boolean; path: string; filename?: string }
 
-let session: Session | null = null
-
 export default function mermaidToolsExtension(pi: ExtensionAPI) {
+  const group: string = `${GROUP}-${crypto.randomUUID()}`
+  let session: Session | null = null
+
   // ── write_mermaid ──────────────────────────────────────────────────────────
   pi.registerTool({
     name: "write_mermaid",
@@ -68,7 +69,7 @@ export default function mermaidToolsExtension(pi: ExtensionAPI) {
     async execute(_id, params) {
       const source = (params.source ?? "").trim()
       if (!source) throw new Error("`write_mermaid` requires a non-empty `source`.")
-      session = writeBody(GROUP, BODY_FILE, source)
+      session = writeBody(group, BODY_FILE, source)
       const lines = source.split("\n").length
       return {
         content: [

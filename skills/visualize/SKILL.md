@@ -43,10 +43,10 @@ Keep the idea intact but trust the maker to compose; if your brief lists more th
 Dispatch the maker with the `task` tool:
 
 ```
-task(context="Visualization for a lesson.", tasks=[{agent: "mermaid-maker", task: "<your minimal, concrete brief>"}])
+task(context="Visualization for a lesson.", tasks=[{agent: "mermaid-maker", task: "<your minimal, concrete brief>", solutionSpace: "One correct, minimal diagram of the supplied idea."}])
 ```
 ```
-task(context="Visualization for a lesson.", tasks=[{agent: "svg-maker", task: "<your minimal, concrete brief>"}])
+task(context="Visualization for a lesson.", tasks=[{agent: "svg-maker", task: "<your minimal, concrete brief>", solutionSpace: "One correct, minimal picture of the supplied idea."}])
 ```
 
 The maker owns its own purpose-built tools (`write_*`/`edit_*`/`render_*`) — it authors the source, renders it to a PNG, **looks at the PNG and iterates until it is correct and clean**, publishes it into the vault with a unique filename, and returns:

@@ -12,8 +12,8 @@
  *
  * Rendering shells out to rsvg-convert (librsvg — good system-font handling),
  * falling back to ImageMagick's `magick` if rsvg-convert is absent. Both are
- * system binaries; no node render deps. Module-level session state persists
- * across this child process's tool calls, isolated from any parallel maker.
+ * system binaries; no node render deps. Factory-local session state and a
+ * unique staging group isolate parallel makers in the same process.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent"
@@ -38,8 +38,6 @@ const RENDER_TIMEOUT_MS = 60_000
 
 type RenderDetails = { ok: boolean; path: string; filename?: string }
 
-let session: Session | null = null
-
 /** Render an SVG file to PNG via rsvg-convert, falling back to magick. */
 async function renderSvg(svgPath: string, outPath: string, workDir: string) {
   // rsvg-convert renders at the SVG's intrinsic size; -z 2 doubles it for crispness.
@@ -58,6 +56,9 @@ async function renderSvg(svgPath: string, outPath: string, workDir: string) {
 }
 
 export default function svgToolsExtension(pi: ExtensionAPI) {
+  const group: string = `${GROUP}-${crypto.randomUUID()}`
+  let session: Session | null = null
+
   // ── write_svg ──────────────────────────────────────────────────────────────
   pi.registerTool({
     name: "write_svg",
@@ -77,7 +78,7 @@ export default function svgToolsExtension(pi: ExtensionAPI) {
       const source = (params.source ?? "").trim()
       if (!source) throw new Error("`write_svg` requires a non-empty `source`.")
       if (!source.includes("<svg")) throw new Error("`write_svg`: source must be a complete <svg>…</svg> document.")
-      session = writeBody(GROUP, BODY_FILE, source)
+      session = writeBody(group, BODY_FILE, source)
       const lines = source.split("\n").length
       return {
         content: [
