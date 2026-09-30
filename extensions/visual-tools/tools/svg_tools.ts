@@ -7,11 +7,8 @@
  *   render_svg  — render whatever is in the file → PNG, returned inline; with
  *                 `save_as`, also publish it into <cwd>/viz
  *
- * Bundled inside the visual-tools extension and exposed to subagents via the
- * interactive-subagents `registerToolExtension` hook (see ../index.ts). Loaded
- * by the spawned child pi process for any subagent whose `tools:` frontmatter
- * includes these names (currently just svg-maker). All three names map to this
- * one file.
+ * Loaded by the visual-tools extension (../index.ts), which registers these
+ * tools with omp and makes them available to subagents.
  *
  * Rendering shells out to rsvg-convert (librsvg — good system-font handling),
  * falling back to ImageMagick's `magick` if rsvg-convert is absent. Both are
