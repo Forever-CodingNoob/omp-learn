@@ -1,10 +1,12 @@
 # learn
 
+An omp port of Eero Alvar's AI learning system ([amosblomqvist/learn](https://github.com/amosblomqvist/learn)), originally built for pi. The first-person text below is Eero Alvar's.
+
 [![video](assets/thumbnail.png)](https://www.youtube.com/watch?v=kzcI5F4tGiU)
 
 My AI learning system from this video: [How I Use AI to Learn Things](https://www.youtube.com/watch?v=kzcI5F4tGiU).
 
-This is a personal system I built for myself, shared as-is. Built as a pi configuration and ported to omp: the teaching philosophy encoded in a skill, a few small extensions, and agent definitions.
+This is a personal system I built for myself, shared as-is. Built as a pi configuration: the teaching philosophy encoded in a skill, a few small extensions, and agent definitions.
 
 ## What's in it
 
@@ -17,8 +19,6 @@ This is a personal system I built for myself, shared as-is. Built as a pi config
 - `agents/` — `researcher`, `svg-maker`, `mermaid-maker`: the subagents the system delegates to
 
 ## Install
-
-Forked from [amosblomqvist/learn](https://github.com/amosblomqvist/learn).
 
 This repo **is** an `.omp` directory. From your learning project's root:
 
