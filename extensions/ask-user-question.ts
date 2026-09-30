@@ -1,6 +1,7 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import {
 	Editor,
+	getSymbolTheme,
 	type EditorTheme,
 	Key,
 	Text,
@@ -114,6 +115,7 @@ function createEditorTheme(theme: any): EditorTheme {
 			scrollInfo: (t) => theme.fg("dim", t),
 			noMatch: (t) => theme.fg("warning", t),
 		},
+		symbols: getSymbolTheme(),
 	};
 }
 
@@ -217,7 +219,7 @@ async function askSingleChoice(
 		let editMode = false;
 		let cachedLines: string[] | undefined;
 		let cachedWidth = -1;
-		const editor = new Editor(tui, createEditorTheme(theme));
+		const editor = new Editor(createEditorTheme(theme));
 
 		editor.onSubmit = (value) => {
 			const trimmed = value.trim();
@@ -358,7 +360,7 @@ async function askMultiChoice(
 		let cachedLines: string[] | undefined;
 		let cachedWidth = -1;
 		const selected = new Map<string, AskAnswer>();
-		const editor = new Editor(tui, createEditorTheme(theme));
+		const editor = new Editor(createEditorTheme(theme));
 
 		editor.onSubmit = (value) => {
 			const trimmed = value.trim();

@@ -1,6 +1,7 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import {
 	Editor,
+	getSymbolTheme,
 	type EditorTheme,
 	Key,
 	Text,
@@ -204,6 +205,7 @@ function createEditorTheme(theme: any): EditorTheme {
 			scrollInfo: (t) => theme.fg("dim", t),
 			noMatch: (t) => theme.fg("warning", t),
 		},
+		symbols: getSymbolTheme(),
 	};
 }
 
@@ -412,7 +414,7 @@ function pushNoteField(lines: string[], theme: any, width: number, editor: Edito
 // keeping the text. Ctrl+J still inserts a newline (pi convention), so
 // multi-line notes work.
 function makeNoteEditor(tui: any, theme: any): Editor {
-	const editor = new Editor(tui, createEditorTheme(theme));
+	const editor = new Editor(createEditorTheme(theme));
 	editor.focused = false;
 	editor.disableSubmit = true;
 	return editor;
