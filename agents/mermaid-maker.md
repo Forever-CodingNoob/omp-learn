@@ -4,8 +4,6 @@ description: Authors ONE Mermaid diagram from a brief, renders it to a PNG, LOOK
 tools: write_mermaid, edit_mermaid, render_mermaid, read
 model: anthropic/claude-sonnet-5
 thinking: medium
-system-prompt: append
-auto-exit: true
 ---
 
 # Mermaid Maker

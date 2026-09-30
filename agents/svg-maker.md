@@ -4,8 +4,6 @@ description: Authors ONE hand-written SVG from a brief, renders it to a PNG, LOO
 tools: write_svg, edit_svg, render_svg, read
 model: anthropic/claude-sonnet-5
 thinking: medium
-system-prompt: append
-auto-exit: true
 ---
 
 # SVG Maker

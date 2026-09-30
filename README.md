@@ -4,7 +4,7 @@
 
 My AI learning system from this video: [How I Use AI to Learn Things](https://www.youtube.com/watch?v=kzcI5F4tGiU).
 
-This is a personal system I built for myself, shared as-is. Built as a pi configuration: the teaching philosophy encoded in a skill, a few small extensions, and agent definitions.
+This is a personal system I built for myself, shared as-is. Built as a pi configuration and ported to omp: the teaching philosophy encoded in a skill, a few small extensions, and agent definitions.
 
 ## What's in it
 
@@ -18,18 +18,28 @@ This is a personal system I built for myself, shared as-is. Built as a pi config
 
 ## Install
 
-This repo **is** a `.pi` directory. From your learning project's root:
+Forked from [amosblomqvist/learn](https://github.com/amosblomqvist/learn).
+
+This repo **is** an `.omp` directory. From your learning project's root:
 
 ```bash
-git clone https://github.com/amosblomqvist/learn .pi
+git clone https://github.com/Forever-CodingNoob/omp-learn .omp
 ```
 
-Then open pi in that directory. (Or copy the pieces you want into your existing project config.)
+Install the visual tools' dependencies in `.omp/extensions/visual-tools`:
+
+```bash
+cd .omp/extensions/visual-tools
+bun install --omit=dev
+```
+
+Then open omp in your learning project's root. (Or copy the pieces you want into your existing project config.)
 
 ## Requirements
 
-- [pi](https://github.com/earendil-works/pi)
-- A subagent implementation, so the system can spawn the researcher and the visual makers. Recommended: [pi-interactive-subagents](https://github.com/amosblomqvist/pi-interactive-subagents) (tmux only). With it, everything works out of the box. Any other implementation works too, but expect to adapt the agent definitions, e.g. `agents/researcher.md` lists `safe_bash` in its tools, which is specific to that extension.
+- [omp](https://github.com/can1357/oh-my-pi)
+- omp's built-in `task` tool spawns the researcher and the visual makers.
+- Rendering: Mermaid PNGs need a headless Chromium (`node_modules/.bin/puppeteer browsers install chrome-headless-shell` in `extensions/visual-tools`), Chromium's system libraries, and fonts; SVG PNGs need `rsvg-convert` (librsvg) and fonts.
 - `ask-user-question` — use the copy bundled here. If your setup already has an `ask-user-question` extension, use **this** one in its place. Popups from different extensions serialize through a shared UI lock, which only works when it's the same implementation.
 
 ## Notes
