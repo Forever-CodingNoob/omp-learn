@@ -20,7 +20,7 @@ Do NOT visualize when prose or a single equation already carries it. A decorativ
 
 ## Choose the maker
 
-Two makers, discovered from `.pi/agents/`:
+Two makers, discovered from `.omp/agents/`:
 
 - **`mermaid-maker`** — structural/relational visuals: dependency graphs, flowcharts, sequence/state/ER/class diagrams, trees, mindmaps, timelines. This is the default and fits the dependency-graph pedagogy directly.
 - **`svg-maker`** — spatial/geometric visuals Mermaid can't lay out: exact coordinates, geometry figures, number lines, vectors, plots, custom shapes.
@@ -40,13 +40,13 @@ Keep the idea intact but trust the maker to compose; if your brief lists more th
 
 ## Invoke
 
-Dispatch the maker with the `subagent` tool:
+Dispatch the maker with the `task` tool:
 
 ```
-subagent(agent="mermaid-maker", task="<your minimal, concrete brief>")
+task(context="Visualization for a lesson.", tasks=[{agent: "mermaid-maker", task: "<your minimal, concrete brief>"}])
 ```
 ```
-subagent(agent="svg-maker", task="<your minimal, concrete brief>")
+task(context="Visualization for a lesson.", tasks=[{agent: "svg-maker", task: "<your minimal, concrete brief>"}])
 ```
 
 The maker owns its own purpose-built tools (`write_*`/`edit_*`/`render_*`) — it authors the source, renders it to a PNG, **looks at the PNG and iterates until it is correct and clean**, publishes it into the vault with a unique filename, and returns:
