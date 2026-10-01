@@ -22,7 +22,7 @@ This is a personal system Eero Alvar built for himself, shared as-is. Built as a
 
 Pick one of the three methods below, then start omp in your learning project's root. To render Mermaid diagrams, also run the browser step of your method.
 
-### 1. Plugin for all projects
+### 1. Install the plugin globally
 
 ```bash
 omp plugin install github:Forever-CodingNoob/omp-learn
@@ -35,7 +35,7 @@ cd ~/.omp/plugins
 node_modules/.bin/puppeteer browsers install chrome-headless-shell
 ```
 
-### 2. Plugin for one project
+### 2. Install the plugin for one project
 
 From your learning project's root:
 
@@ -52,7 +52,7 @@ bun install --omit=dev
 node_modules/.bin/puppeteer browsers install chrome-headless-shell
 ```
 
-### 3. Project config
+### 3. Clone from source
 
 From your learning project's root:
 
@@ -68,7 +68,7 @@ Browser step, in `.omp`:
 node_modules/.bin/puppeteer browsers install chrome-headless-shell
 ```
 
-You can also copy only the pieces you want into your existing project config.
+You can also copy only the pieces you want into your existing project config (i.e., `./.omp/`).
 
 ## Requirements
 
