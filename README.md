@@ -20,13 +20,41 @@ This is a personal system Eero Alvar built for himself, shared as-is. Built as a
 
 ## Install
 
-Install as an omp plugin, then restart omp:
+Pick one of the three methods below, then start omp in your learning project's root. To render Mermaid diagrams, also run the browser step of your method.
+
+### 1. Plugin for all projects
 
 ```bash
 omp plugin install github:Forever-CodingNoob/omp-learn
 ```
 
-For a project config, clone into `.omp` and install dependencies at the repo root:
+Browser step:
+
+```bash
+cd ~/.omp/plugins
+node_modules/.bin/puppeteer browsers install chrome-headless-shell
+```
+
+### 2. Plugin for one project
+
+From your learning project's root:
+
+```bash
+omp plugin marketplace add Forever-CodingNoob/omp-learn
+omp plugin install omp-learn@omp-learn --scope project
+```
+
+A marketplace install does not install npm dependencies. Install them in the plugin's cache directory (its name contains the plugin version), then run the browser step there:
+
+```bash
+cd ~/.omp/plugins/cache/plugins/omp-learn___omp-learn___0.1.0
+bun install --omit=dev
+node_modules/.bin/puppeteer browsers install chrome-headless-shell
+```
+
+### 3. Project config
+
+From your learning project's root:
 
 ```bash
 git clone https://github.com/Forever-CodingNoob/omp-learn .omp
@@ -34,13 +62,19 @@ cd .omp
 bun install --omit=dev
 ```
 
-Then open omp in your learning project's root. (Or copy the pieces you want into your existing project config.)
+Browser step, in `.omp`:
+
+```bash
+node_modules/.bin/puppeteer browsers install chrome-headless-shell
+```
+
+You can also copy only the pieces you want into your existing project config.
 
 ## Requirements
 
 - [omp](https://github.com/can1357/oh-my-pi)
 - omp's built-in `task` tool spawns the researcher and the visual makers.
-- Rendering: Mermaid PNGs need a headless Chromium (run `node_modules/.bin/puppeteer browsers install chrome-headless-shell` at the package root where you installed dependencies), Chromium's system libraries, and fonts; SVG PNGs need `rsvg-convert` (librsvg) and fonts.
+- Rendering: Mermaid PNGs need a headless Chromium (see the browser step of your install method), Chromium's system libraries, and fonts. SVG PNGs need `rsvg-convert` (librsvg) and fonts.
 - `ask-user-question` — use the copy bundled here. If your setup already has an `ask-user-question` extension, use **this** one in its place. Popups from different extensions serialize through a shared UI lock, which only works when it's the same implementation.
 
 ## Notes
