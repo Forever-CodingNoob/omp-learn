@@ -44,10 +44,10 @@ omp plugin marketplace add Forever-CodingNoob/omp-learn
 omp plugin install omp-learn@omp-learn --scope project
 ```
 
-A marketplace install does not install npm dependencies. Install them in the plugin's cache directory (its name contains the plugin version), then run the browser step there:
+A marketplace install does not install npm dependencies. Install them in the plugin's cache directory, then run the browser step there. This directory is user-level, and every project that uses this method shares it. `<version>` is the `version` in `package.json`; run `ls ~/.omp/plugins/cache/plugins/` to see the exact name. An upgrade or reinstall creates a new directory, so repeat these steps after each one.
 
 ```bash
-cd ~/.omp/plugins/cache/plugins/omp-learn___omp-learn___0.1.0
+cd ~/.omp/plugins/cache/plugins/omp-learn___omp-learn___<version>
 bun install --omit=dev
 node_modules/.bin/puppeteer browsers install chrome-headless-shell
 ```

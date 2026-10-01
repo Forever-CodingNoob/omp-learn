@@ -7,8 +7,7 @@
     {
       "name": "omp-learn",
       "source": "./",
-      "description": "Eero Alvar's AI learning system, ported to omp.",
-      "version": "0.1.0"
+      "description": "Eero Alvar's AI learning system, ported to omp."
     }
   ]
 }
