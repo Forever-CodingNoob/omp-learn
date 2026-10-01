@@ -1,0 +1,16 @@
+{
+  "name": "omp-learn",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.2"
+  },
+  "omp": {
+    "extensions": [
+      "extensions/quiz.ts",
+      "extensions/ask-user-question.ts",
+      "extensions/md-log.ts",
+      "extensions/visual-tools"
+    ]
+  }
+}

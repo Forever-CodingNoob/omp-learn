@@ -19,7 +19,7 @@
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent"
 import { Type } from "@sinclair/typebox"
-import { fileURLToPath } from "node:url"
+import { createRequire } from "node:module"
 import {
   applyEdit,
   dirname,
@@ -30,15 +30,13 @@ import {
   publish,
   readFileSync,
   run,
+  type RunResult,
   type Session,
   snippetAround,
   writeBody,
   writeFileSync,
 } from "./_common.ts"
 
-const TOOL_DIR = dirname(fileURLToPath(import.meta.url))
-const EXTENSION_DIR = dirname(TOOL_DIR)
-const MMDC_BIN = join(EXTENSION_DIR, "node_modules", ".bin", "mmdc")
 const GROUP = "mermaid"
 const BODY_FILE = "diagram.mmd"
 const RENDER_TIMEOUT_MS = 120_000
@@ -152,11 +150,17 @@ export default function mermaidToolsExtension(pi: ExtensionAPI) {
       )
 
       const outPath = join(workDir, `render-${Date.now()}.png`)
-      const res = await run(
-        MMDC_BIN,
-        ["-i", bodyPath, "-o", outPath, "-p", cfgPath, "-s", "2", "-b", "white"],
-        { cwd: workDir, timeoutMs: RENDER_TIMEOUT_MS, env: { PUPPETEER_SKIP_DOWNLOAD: "1" } },
-      )
+      let res: RunResult
+      try {
+        const cliPath: string = join(dirname(createRequire(import.meta.url).resolve("@mermaid-js/mermaid-cli")), "cli.js")
+        res = await run(
+          "node",
+          [cliPath, "-i", bodyPath, "-o", outPath, "-p", cfgPath, "-s", "2", "-b", "white"],
+          { cwd: workDir, timeoutMs: RENDER_TIMEOUT_MS, env: { PUPPETEER_SKIP_DOWNLOAD: "1" } },
+        )
+      } catch (error) {
+        res = { code: null, stdout: "", stderr: String(error), timedOut: false }
+      }
 
       if (res.code !== 0 || !existsSync(outPath)) {
         const detail = (res.stderr || res.stdout || "unknown error").split("\n").slice(-30).join("\n")
