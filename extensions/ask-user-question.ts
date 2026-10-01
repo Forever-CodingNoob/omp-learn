@@ -571,6 +571,7 @@ export default function askUserQuestion(pi: ExtensionAPI) {
 	pi.registerTool({
 		name: "ask_user_question",
 		label: "ask_user_question",
+		loadMode: "essential",
 		description:
 			"Ask the user a single question and pause execution until they answer. Use this when requirements are ambiguous, user preferences are needed, a decision would materially affect implementation, or you need confirmation before proceeding. Ask exactly one question per tool call, and prefer multiple separate tool calls over bundling unrelated questions together.",
 		promptSnippet:
